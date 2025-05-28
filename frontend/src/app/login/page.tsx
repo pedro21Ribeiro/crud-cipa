@@ -1,28 +1,27 @@
-"use client"; // Adicione esta linha no topo do arquivo
+"use client";
 
-import React, { useState } from "react"; // Importar useState
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import TextField from "@mui/material/TextField";
 import { Button, Card, Typography } from "@mui/material";
 
 export default function Login() {
-  const [email, setEmail] = useState(""); // Estado para o email
-  const [password, setPassword] = useState(""); // Estado para a senha
-  const [error, setError] = useState(""); // Estado para erros
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Impede o comportamento padrão do formulário
+    e.preventDefault();
 
-    // Verifica se os campos estão preenchidos
     if (!email || !password) {
       setError("Por favor, preencha todos os campos.");
       return;
     }
 
-    // Aqui você deve adicionar a lógica de autenticação
     try {
       const response = await fetch("/api/login", {
-        // coloque o endpoint aqui
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,6 +34,7 @@ export default function Login() {
       }
 
       setError("");
+      router.push("/home");
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
@@ -73,7 +73,6 @@ export default function Login() {
           </Typography>
         </div>
         <form onSubmit={handleLogin}>
-          {" "}
           <Typography
             variant="h6"
             sx={{
