@@ -5,7 +5,14 @@ import { Button, Card, Typography } from "@mui/material";
 
 export default function Login() {
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center", // Centralizar horizontalmente
+        alignItems: "center", // Centralizar verticalmente
+        height: "90vh", // Definir a altura do contêiner para 100% da altura da janela
+      }}
+    >
       <Card
         variant="outlined"
         style={{ padding: "20px", maxWidth: "400px", margin: "auto" }}
