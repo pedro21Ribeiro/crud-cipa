@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
+    {"offset": {"line": 62, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/mkyzb/Documents/Programacao_e_Cia/crud-cipa/crud-cipa/frontend/src/app/api/register/route.ts"],"sourcesContent":["import { NextResponse } from \"next/server\";\n\nexport async function POST(request: Request) {\n  try {\n    const { name, email, password } = await request.json();\n\n    // Simulação: salvar o usuário (aqui só vamos mostrar no console)\n    console.log(\"Novo usuário cadastrado:\", { name, email, password });\n\n    return NextResponse.json({ message: \"Cadastro realizado com sucesso!\" }, { status: 201 });\n  } catch (error) {\n    console.error(\"Erro ao cadastrar:\", error);\n    return NextResponse.json({ message: \"Erro ao cadastrar usuário\" }, { status: 500 });\n  }\n}\n"],"names":[],"mappings":";;;AAAA;;AAEO,eAAe,KAAK,OAAgB;IACzC,IAAI;QACF,MAAM,EAAE,IAAI,EAAE,KAAK,EAAE,QAAQ,EAAE,GAAG,MAAM,QAAQ,IAAI;QAEpD,iEAAiE;QACjE,QAAQ,GAAG,CAAC,4BAA4B;YAAE;YAAM;YAAO;QAAS;QAEhE,OAAO,gIAAA,CAAA,eAAY,CAAC,IAAI,CAAC;YAAE,SAAS;QAAkC,GAAG;YAAE,QAAQ;QAAI;IACzF,EAAE,OAAO,OAAO;QACd,QAAQ,KAAK,CAAC,sBAAsB;QACpC,OAAO,gIAAA,CAAA,eAAY,CAAC,IAAI,CAAC;YAAE,SAAS;QAA4B,GAAG;YAAE,QAAQ;QAAI;IACnF;AACF","debugId":null}}]
+}
