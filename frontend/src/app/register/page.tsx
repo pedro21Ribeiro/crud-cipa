@@ -11,22 +11,35 @@ export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !confirmPassword) {
       setError("Por favor, preencha todos os campos.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError("As senhas não coincidem.");
+      return;
+    }
+
+    // Validação adicional da senha (reforço no lado do cliente)
+    const passwordRegex = /^(?=(?:.*[a-z]){2,})(?=(?:.*[A-Z]){2,})(?=(?:.*\d){1,})(?=(?:.*[^A-Za-z0-9\s]){2,}).{6,}$/;
+    if (!passwordRegex.test(password)) {
+      setError(
+        "A senha deve ter no mínimo 6 caracteres, 2 letras maiúsculas, 2 letras minúsculas, 1 número e 2 caracteres especiais."
+      );
       return;
     }
 
     try {
       const response = await fetch("/api/register", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password }),
       });
 
@@ -35,7 +48,7 @@ export default function Register() {
       }
 
       setError("");
-      router.push("/login"); // Redireciona para a tela de login após cadastro
+      router.push("/login");
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
@@ -75,94 +88,88 @@ export default function Register() {
         </div>
 
         <form onSubmit={handleRegister}>
+          {/* Nome */}
           <Typography
             variant="h6"
-            sx={{
-              position: "relative",
-              top: "10px",
-              color: "#006f83",
-              fontWeight: "bold",
-            }}
+            sx={{ position: "relative", top: "10px", color: "#006f83", fontWeight: "bold" }}
           >
-            Nome
+            Nome Completo
           </Typography>
           <TextField
-            variant="outlined"
+            type="text"
             fullWidth
             margin="normal"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            sx={{
-              backgroundColor: "rgba(230, 230, 230, 1)",
-              border: "0",
-              borderRadius: "15px",
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  border: "none",
-                },
-              },
-            }}
+            required
+            sx={textFieldStyle}
           />
 
+          {/* Email */}
           <Typography
             variant="h6"
-            sx={{
-              position: "relative",
-              top: "10px",
-              color: "#006f83",
-              fontWeight: "bold",
-            }}
+            sx={{ position: "relative", top: "10px", color: "#006f83", fontWeight: "bold" }}
           >
             E-mail
           </Typography>
           <TextField
-            variant="outlined"
+            type="email"
             fullWidth
             margin="normal"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            sx={{
-              backgroundColor: "rgba(230, 230, 230, 1)",
-              border: "0",
-              borderRadius: "15px",
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  border: "none",
-                },
-              },
-            }}
+            required
+            sx={textFieldStyle}
           />
 
+          {/* Senha */}
           <Typography
             variant="h6"
-            sx={{
-              position: "relative",
-              top: "10px",
-              color: "#006f83",
-              fontWeight: "bold",
-            }}
+            sx={{ position: "relative", top: "10px", color: "#006f83", fontWeight: "bold" }}
           >
             Senha
           </Typography>
           <TextField
             type="password"
-            variant="outlined"
             fullWidth
             margin="normal"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            sx={{
-              backgroundColor: "rgba(230, 230, 230, 1)",
-              border: "0",
-              borderRadius: "15px",
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  border: "none",
-                },
+            required
+            slotProps={{
+              input: {
+                pattern:
+                  "^(?=(?:.*[a-z]){2,})(?=(?:.*[A-Z]){2,})(?=(?:.*\\d){1,})(?=(?:.*[^A-Za-z0-9\\s]){2,}).{6,}$",
+                title:
+                  "A senha deve ter no mínimo 6 caracteres, 2 letras maiúsculas, 2 letras minúsculas, 1 número e 2 caracteres especiais.",
               },
             }}
+            sx={textFieldStyle}
           />
 
+          {/* Confirmar Senha */}
+          <Typography
+            variant="h6"
+            sx={{ position: "relative", top: "10px", color: "#006f83", fontWeight: "bold" }}
+          >
+            Confirmar Senha
+          </Typography>
+          <TextField
+            type="password"
+            fullWidth
+            margin="normal"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+            slotProps={{
+              input: {
+                title: "Repita a senha informada acima.",
+              },
+            }}
+            sx={textFieldStyle}
+          />
+
+          {/* Botão */}
           <div style={{ padding: "10px" }}>
             <Button
               variant="contained"
@@ -177,23 +184,19 @@ export default function Register() {
                 borderRadius: "999px",
               }}
             >
-              <Typography
-                variant="inherit"
-                sx={{
-                  color: "#ffff",
-                  fontWeight: "bold",
-                }}
-              >
+              <Typography variant="inherit" sx={{ color: "#fff", fontWeight: "bold" }}>
                 Cadastrar
               </Typography>
             </Button>
           </div>
 
+          {/* Erro */}
           <div style={{ padding: "5px", textAlign: "center" }}>
             {error && <Typography sx={{ color: "red" }}>{error}</Typography>}
           </div>
         </form>
 
+        {/* Link para Login */}
         <Typography sx={{ textAlign: "center", paddingTop: "10px" }}>
           Já tem uma conta?{" "}
           <Link href="/login" style={{ textDecoration: "none" }}>
@@ -204,3 +207,14 @@ export default function Register() {
     </div>
   );
 }
+
+const textFieldStyle = {
+  backgroundColor: "rgba(230, 230, 230, 1)",
+  border: "0",
+  borderRadius: "15px",
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      border: "none",
+    },
+  },
+};
