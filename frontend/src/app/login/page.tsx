@@ -11,6 +11,25 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [emailError, setEmailError] = useState("");
+
+  // Função para validar formato de email
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  };
+
+  // Verifica email quando o input muda
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newEmail = e.target.value;
+    setEmail(newEmail);
+
+    if (newEmail && !validateEmail(newEmail)) {
+      setEmailError("Por favor, insira um email válido.");
+    } else {
+      setEmailError("");
+    }
+  };
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,8 +39,13 @@ export default function Login() {
       return;
     }
 
+    if (!validateEmail(email)) {
+      setEmailError("Por favor, insira um email válido.");
+      return;
+    }
+
     try {
-      const response = await fetch("/api/login", {
+      const response = await fetch("http://localhost:8080/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -51,6 +75,9 @@ export default function Login() {
         justifyContent: "center",
         alignItems: "center",
         height: "90vh",
+        backgroundColor: "rgba(230, 230, 230, 1)",
+        margin: "0",
+        padding: "0",
       }}
     >
       <Card
@@ -89,7 +116,9 @@ export default function Login() {
             fullWidth
             margin="normal"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleEmailChange}
+            error={!!emailError}
+            helperText={emailError}
             sx={{
               backgroundColor: "rgba(230, 230, 230, 1)",
               border: "0",
