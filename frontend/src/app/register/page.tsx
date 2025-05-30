@@ -28,7 +28,8 @@ export default function Register() {
     }
 
     // Validação adicional da senha (reforço no lado do cliente)
-    const passwordRegex = /^(?=(?:.*[a-z]){2,})(?=(?:.*[A-Z]){2,})(?=(?:.*\d){1,})(?=(?:.*[^A-Za-z0-9\s]){2,}).{6,}$/;
+    const passwordRegex =
+      /^(?=(?:.*[a-z]){2,})(?=(?:.*[A-Z]){2,})(?=(?:.*\d){1,})(?=(?:.*[^A-Za-z0-9\s]){2,}).{6,}$/;
     if (!passwordRegex.test(password)) {
       setError(
         "A senha deve ter no mínimo 6 caracteres, 2 letras maiúsculas, 2 letras minúsculas, 1 número e 2 caracteres especiais."
@@ -91,7 +92,12 @@ export default function Register() {
           {/* Nome */}
           <Typography
             variant="h6"
-            sx={{ position: "relative", top: "10px", color: "#006f83", fontWeight: "bold" }}
+            sx={{
+              position: "relative",
+              top: "10px",
+              color: "#006f83",
+              fontWeight: "bold",
+            }}
           >
             Nome Completo
           </Typography>
@@ -108,7 +114,12 @@ export default function Register() {
           {/* Email */}
           <Typography
             variant="h6"
-            sx={{ position: "relative", top: "10px", color: "#006f83", fontWeight: "bold" }}
+            sx={{
+              position: "relative",
+              top: "10px",
+              color: "#006f83",
+              fontWeight: "bold",
+            }}
           >
             E-mail
           </Typography>
@@ -125,7 +136,12 @@ export default function Register() {
           {/* Senha */}
           <Typography
             variant="h6"
-            sx={{ position: "relative", top: "10px", color: "#006f83", fontWeight: "bold" }}
+            sx={{
+              position: "relative",
+              top: "10px",
+              color: "#006f83",
+              fontWeight: "bold",
+            }}
           >
             Senha
           </Typography>
@@ -136,13 +152,11 @@ export default function Register() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            slotProps={{
-              input: {
-                pattern:
-                  "^(?=(?:.*[a-z]){2,})(?=(?:.*[A-Z]){2,})(?=(?:.*\\d){1,})(?=(?:.*[^A-Za-z0-9\\s]){2,}).{6,}$",
-                title:
-                  "A senha deve ter no mínimo 6 caracteres, 2 letras maiúsculas, 2 letras minúsculas, 1 número e 2 caracteres especiais.",
-              },
+            inputProps={{
+              pattern:
+                "^(?=(?:.*[a-z]){2,})(?=(?:.*[A-Z]){2,})(?=(?:.*\\d){1,})(?=(?:.*[^A-Za-z0-9\\s]){2,}).{6,}$",
+              title:
+                "A senha deve ter no mínimo 6 caracteres, 2 letras maiúsculas, 2 letras minúsculas, 1 número e 2 caracteres especiais.",
             }}
             sx={textFieldStyle}
           />
@@ -150,7 +164,12 @@ export default function Register() {
           {/* Confirmar Senha */}
           <Typography
             variant="h6"
-            sx={{ position: "relative", top: "10px", color: "#006f83", fontWeight: "bold" }}
+            sx={{
+              position: "relative",
+              top: "10px",
+              color: "#006f83",
+              fontWeight: "bold",
+            }}
           >
             Confirmar Senha
           </Typography>
@@ -184,7 +203,10 @@ export default function Register() {
                 borderRadius: "999px",
               }}
             >
-              <Typography variant="inherit" sx={{ color: "#fff", fontWeight: "bold" }}>
+              <Typography
+                variant="inherit"
+                sx={{ color: "#fff", fontWeight: "bold" }}
+              >
                 Cadastrar
               </Typography>
             </Button>
