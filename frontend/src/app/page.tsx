@@ -1,9 +1,10 @@
 import React from "react";
+import Login from "./login/page";
 export default function Page() {
   return (
     <div>
       <div>
-        <h1>hello</h1>
+        <Login />
       </div>
     </div>
   );
